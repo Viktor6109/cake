@@ -1,0 +1,16 @@
+# .continueignore
+**/__pycache__/
+**/migrations/
+**/static/
+**/staticfiles/
+**/media/
+**/.venv/
+**/env/
+**/venv/
+**/node_modules/
+**/.pytest_cache/
+**/*.pyc
+**/db.sqlite3
+**/.git/
+**/.idea/
+**/.vscode/

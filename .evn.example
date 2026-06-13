@@ -1,0 +1,11 @@
+# D:\AI\cake\.env.example
+
+# Скопируйте этот файл в .env и заполните своими значениями:
+# cp .env.example .env
+
+# Сгенерируйте новый SECRET_KEY командой:
+# python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+SECRET_KEY=your-secret-key-here
+
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost

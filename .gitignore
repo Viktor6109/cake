@@ -1,0 +1,35 @@
+# D:\AI\cake\.gitignore
+
+# Переменные окружения с секретами
+.env
+.env.local
+.env.*.local
+
+# База данных
+db.sqlite3
+*.sqlite3
+
+# Виртуальное окружение
+.venv/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Медиа и статика (загруженные пользователями файлы)
+media/
+staticfiles/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

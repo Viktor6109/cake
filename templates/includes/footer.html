@@ -1,0 +1,58 @@
+{% load static %}
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            
+            <!-- 1. О компании -->
+            <div class="footer-section">
+                <h3 class="footer-title">Имя Кондитера</h3>
+                <p class="footer-text">
+                    Создаю сладкие шедевры для ваших самых важных событий. 
+                    Только натуральные ингредиенты и любовь к делу.
+                </p>
+            </div>
+
+            <!-- 2. Навигация -->
+            <div class="footer-section">
+                <h4 class="footer-subtitle">Навигация</h4>
+                <ul class="footer-nav">
+                    <li><a href="{% url 'catalog:product_list' %}">Начинки и цены</a></li>
+                    <li><a href="{% url 'catalog:portfolio' %}">Портфолио</a></li>
+                    <li><a href="{% url 'core:contacts' %}">Доставка и оплата</a></li>
+                </ul>
+            </div>
+
+            <!-- 3. Контакты -->
+            <div class="footer-section">
+                <h4 class="footer-subtitle">Связаться со мной</h4>
+                <ul class="footer-contacts">
+                    <li>
+                        <a href="tel:+480774912267" class="contact-link">
+                            <span class="contact-icon">📞</span>
+                            <span>+480774912267</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span class="contact-link">
+                            <span class="contact-icon">📍</span>
+                            <span>г. Прага (самовывоз)</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <!-- Соцсети -->
+                <div class="social-links">
+                    <a href="https://t.me/your_username" target="_blank" class="social-link">✈️</a>
+                    <a href="https://wa.me/79990000000" target="_blank" class="social-link">💬</a>
+                    <a href="https://instagram.com/your_username" target="_blank" class="social-link"></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Копирайт -->
+        <div class="footer-bottom">
+            <p>&copy; {% now "Y" %} Имя Кондитера. Все права защищены.</p>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,164 @@
+/* ===================================
+   FOOTER STYLES
+   =================================== */
+
+:root {
+    --primary-color: #ff4d8d;
+    --primary-light: #ff8fb3;
+    --primary-dark: #e6397a;
+    --text-primary: #2d2d2d;
+    --text-secondary: #8b8b8b;
+    --white: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+.footer {
+    background: linear-gradient(135deg, #fff5f7 0%, #ffe4ec 100%);
+    padding: 60px 0 30px;
+    margin-top: 80px;
+    border-top: 3px solid var(--primary-light);
+    width: 100%;
+}
+
+/* СЕТКА ФУТЕРА - 3 КОЛОНКИ */
+.footer-grid {
+    display: grid !important;
+    /* Принудительно 3 колонки */
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Адаптивность: на планшетах 2 колонки, на телефонах 1 */
+@media (max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px;
+    }
+}
+
+/* Секции */
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    /* Градиентный текст */
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-subtitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 10px 0;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-subtitle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.footer-text {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 15px;
+    margin: 0;
+}
+
+/* Списки навигации */
+.footer-nav,
+.footer-contacts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-nav li a,
+.footer-contacts li a,
+.contact-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 15px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-nav li a:hover,
+.contact-link:hover {
+    color: var(--primary-color);
+    padding-left: 5px;
+    /* Небольшой сдвиг при наведении */
+}
+
+/* Соцсети */
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-link {
+    width: 40px;
+    height: 40px;
+    background: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(255, 77, 141, 0.15);
+    transition: var(--transition);
+}
+
+.social-link:hover {
+    background: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+/* Нижняя полоса */
+.footer-bottom {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 77, 141, 0.2);
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 0;
+}

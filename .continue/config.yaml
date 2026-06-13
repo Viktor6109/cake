@@ -1,0 +1,85 @@
+name: Peceme Django Config
+version: 1.0.0
+schema: v1
+
+# ========== МОДЕЛИ ==========
+models:
+  - name: llama3.2-chat
+    provider: ollama
+    model: llama3.2:latest
+    roles:
+      - chat
+    defaultCompletionOptions:
+      contextLength: 8192
+      temperature: 0.2
+
+  - name: qwen2.5-coder-edit
+    provider: ollama
+    model: qwen2.5-coder:7b
+    roles:
+      - edit
+    defaultCompletionOptions:
+      contextLength: 8192
+
+  - name: qwen2.5-coder-autocomplete
+    provider: ollama
+    model: qwen2.5-coder:1.5b
+    roles:
+      - autocomplete
+    autocompleteOptions:
+      debounceDelay: 200
+      maxPromptTokens: 512
+
+  - name: nomic-embed
+    provider: ollama
+    model: nomic-embed-text
+    roles:
+      - embed
+
+# ========== ПРАВИЛА ==========
+rules:
+  - "Ты эксперт по Django и Python. Следуй строгим правилам:"
+  - "1. Используй только современные Django практики (4.2+)."
+  - "2. Структура проектов: apps, models, views, urls, templates, static, media."
+  - "3. Для импорта настроек всегда используй `from django.conf import settings`."
+  - "4. Предпочитай Class-Based Views для стандартных CRUD, Function-Based Views для кастомной логики."
+  - "5. Всегда указывай `related_name` и `on_delete` в ForeignKey/ManyToMany."
+  - "6. Никогда не пиши миграции вручную. Пиши код модели, а миграции генерируй через `makemigrations`."
+  - "7. Добавляй все необходимые импорты в начале файлов."
+  - "8. Отвечай на русском языке, если запрос на русском. Код оставляй на английском."
+  - "9. При работе с ORM используй `select_related` и `prefetch_related` для оптимизации запросов."
+  - "10. Не используй устаревшие паттерны (например, `django.conf.urls.url` или `render_to_response`)."
+
+# ========== КОНТЕКСТ ==========
+context:
+  - provider: code
+  - provider: file # Было 'files', исправлено на 'file'
+  - provider: terminal
+  - provider: diff
+
+# ========== ДОКУМЕНТАЦИЯ ==========
+docs:
+  - name: Django Official Docs
+    startUrl: https://docs.djangoproject.com/en/stable/
+    # rootUrl удален, так как не поддерживается в schema v1
+  - name: Python Official Docs
+    startUrl: https://docs.python.org/3/
+
+# ========== ПРОМПТЫ ==========
+prompts:
+  - name: django:admin
+    description: "Генерация Django Admin"
+    prompt: |
+      Создай или обнови регистрацию выбранной модели в admin.py. Включи list_display, search_fields, list_filter и readonly_fields, где это уместно. Используй @admin.site.register или декоратор.
+  - name: django:urls
+    description: "Маршрутизация Django"
+    prompt: |
+      Создай паттерн маршрутизации в urls.py для указанного view. Используй path(), укажи name и app_name. Соблюдай порядок импортов.
+  - name: django:model
+    description: "Генерация/Рефакторинг модели"
+    prompt: |
+      Создай или доработай модель Django. Включи __str__, Meta class (verbose_name, ordering), правильные типы полей, related_name и on_delete. Добавь все необходимые импорты.
+  - name: django:test
+    description: "Генерация тестов Django"
+    prompt: |
+      Напиши тесты для выбранного view или модели с использованием Django TestCase/APITestCase. Включи setup, позитивные и негативные сценарии, assert-проверки.

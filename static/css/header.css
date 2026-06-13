@@ -1,0 +1,312 @@
+/* ===================================
+   HEADER STYLES
+   =================================== */
+
+/* CSS Variables (дублируются для автономности файла) */
+:root {
+    --primary-color: #ff4d8d;
+    --primary-light: #ff8fb3;
+    --primary-dark: #e6397a;
+    --secondary-color: #fff5f7;
+    --text-primary: #2d2d2d;
+    --text-secondary: #8b8b8b;
+    --bg-color: #fff0f3;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(255, 77, 141, 0.15);
+    --shadow-sm: 0 2px 8px rgba(255, 77, 141, 0.1);
+    --radius: 16px;
+    --radius-sm: 8px;
+    --transition: all 0.3s ease;
+}
+
+/* Header Container */
+.header {
+    background: var(--white);
+    box-shadow: 0 2px 20px rgba(255, 77, 141, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    animation: slideDown 0.5s ease;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Logo Styles */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 24px;
+    transition: var(--transition);
+}
+
+.navbar-icon {
+    /* font-size: 32px;
+    line-height: 1; */
+    height: 40px;
+    /* Оптимальная высота для навигационной панели */
+    width: auto;
+    /* Автоматический расчет ширины для сохранения пропорций */
+    display: block;
+    /* Убирает невидимый нижний отступ, характерный для строчных элементов */
+    max-width: 100%;
+    /* Гарантирует, что логотип не вылезет за пределы контейнера на маленьких экранах */
+
+}
+
+.brand-text {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+/* Navigation Menu */
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: var(--transition);
+    position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color);
+    background: var(--secondary-color);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
+}
+
+/* Order Button */
+.btn-order {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--white);
+    padding: 12px 28px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    box-shadow: 0 4px 15px rgba(255, 77, 141, 0.3);
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-order:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 77, 141, 0.4);
+    color: var(--white);
+}
+
+/* Mobile Menu Toggle */
+.navbar-toggler {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.navbar-toggler-icon {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 3px;
+    transition: var(--transition);
+}
+
+.navbar-toggler-icon:nth-child(2) {
+    width: 80%;
+}
+
+.navbar-toggler-icon:nth-child(3) {
+    width: 60%;
+}
+
+/* Mobile Menu Active State */
+.navbar-toggler.active .navbar-toggler-icon:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.navbar-toggler.active .navbar-toggler-icon:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar-toggler.active .navbar-toggler-icon:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+    width: 100%;
+}
+
+/* Mobile Menu Panel */
+.navbar-menu.active {
+    right: 0;
+}
+
+/* Overlay for mobile menu */
+.navbar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.navbar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ===================================
+   HEADER ANIMATIONS
+   =================================== */
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ===================================
+   HEADER RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .navbar-toggler {
+        display: flex;
+    }
+
+    .navbar-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--white);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        padding: 80px 20px;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .nav-link {
+        font-size: 18px;
+        padding: 12px 20px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn-order {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    .brand-icon {
+        font-size: 28px;
+    }
+
+    .brand-text {
+        display: none;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .header {
+        animation-duration: 0.01ms !important;
+    }
+}
+
+button:focus,
+.nav-link:focus {
+    outline: 3px solid var(--primary-light);
+    outline-offset: 2px;
+}
