@@ -1,62 +1,38 @@
 [project]
-name = "your_project_name"
+name = "cake"
 version = "0.1.0"
-requires-python = ">=3.11"
-dependencies = []
+description = "Сайт для кондитера на Django"
+requires-python = ">=3.10"
+dependencies = [
+    # Основной фреймворк
+    "django>=5.0",
+    
+    # Работа с изображениями (обязательно для ImageField)
+    "pillow>=10.0.0",
+    
+    # Чтение переменных окружения (.env)
+    "python-decouple>=3.8",
+    
+    # Правильная генерация slug (с поддержкой кириллицы)
+    "python-slugify>=8.0.0",
+    
+    # Красивая админ-панель
+    "django-jazzmin>=3.0.0",    
+]
 
-# ==================== Ruff ====================
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.3.0",
+    "pytest-django",
+    "django-debug-toolbar",
+]
+
 [tool.ruff]
 line-length = 88
-target-version = "py311"
-exclude = [
-    ".git",
-    ".venv",
-    "venv",
-    "migrations",
-    "__pycache__",
-    "staticfiles",
-    "media",
-]
-
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
-docstring-code-format = true
+target-version = "py310"
 
 [tool.ruff.lint]
-select = [
-    "E",    # pycodestyle errors
-    "F",    # pyflakes
-    "I",    # isort
-    "B",    # bugbear
-    "DJ",   # Django-specific
-    "UP",   # pyupgrade
-    "RUF",  # ruff-specific
-    "W",    # warnings
-    "C90",  # complexity
-    "S",    # security (flake8-bandit)
-    "A",    # shadowing
-]
-
-ignore = [
-    "E501",   # line too long (Ruff format сам контролирует)
-    "DJ001",  # если используешь ModelForm
-]
-
-# Django-specific настройки
-#[tool.ruff.lint.flake8-django]
-# Можно добавить свои правила
+select = ["E", "F", "I", "UP"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["cake", "core", "apps"]
-known-django = ["django"]
-section-order = ["future", "standard-library", "third-party", "django", "first-party", "local-folder"]
-
-# ==================== djLint (для шаблонов) ====================
-[tool.djlint]
-profile = "django"
-max_line_length = 88
-blank_line_after_tag = "load,extends,include"
-close_void_tags = true
+known-first-party = ["core", "catalog", "orders", "cake"]

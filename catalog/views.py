@@ -1,6 +1,6 @@
-# catalog/views.py
-from django.views.generic import ListView, DetailView
-from .models import Product, PortfolioItem
+from django.views.generic import DetailView, ListView
+
+from .models import Product, ProductImage
 
 
 class ProductListView(ListView):
@@ -18,11 +18,19 @@ class ProductDetailView(DetailView):
     context_object_name = "product"
 
     def get_queryset(self):
-        return Product.objects.filter(is_active=True)
+        return Product.objects.filter(is_active=True).prefetch_related("images", "tags")
 
 
 class PortfolioListView(ListView):
-    model = PortfolioItem
+    """Галерея работ — показывает фото всех товаров с тегом."""
+
+    model = ProductImage
     template_name = "catalog/portfolio.html"
-    context_object_name = "portfolio_items"
-    paginate_by = 12
+    context_object_name = "images"
+
+    def get_queryset(self):
+        return (
+            ProductImage.objects.filter(product__is_active=True)
+            .select_related("product", "product__category")
+            .order_by("product__category", "sort_order")
+        )

@@ -33,38 +33,31 @@
     <div class="container">
         <h2 class="section-title">Рекомендуемые</h2>
         <div class="products-grid">
+            {% for product in popular_products %}
             <div class="product-card">
                 <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=300" 
-                         alt="Black berry cake" 
-                         class="img-fluid">
+                    {% if product.main_image and product.main_image.image %}
+                        <img src="{{ product.main_image.image.url }}"
+                             alt="{{ product.main_image.alt|default:product.name }}"
+                             class="img-fluid">
+                    {% else %}
+                        <img src="{% static 'img/no-image.jpg' %}"
+                             alt="Нет фото"
+                             class="img-fluid">
+                    {% endif %}
                     <div class="product-overlay">
-                        <span>Black berry cake</span>
+                        <span>{{ product.name }}</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300" 
-                         alt="Клубничный торт" 
-                         class="img-fluid">
-                    <div class="product-overlay">
-                        <span>Клубничный торт</span>
-                    </div>
+                <div class="product-info">
+                    <p class="price">{{ product.price }} ₽</p>
+                    <a href="{% url 'catalog:product_detail' product.pk %}"
+                       class="btn btn-primary">Подробнее</a>
                 </div>
             </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="https://images.unsplash.com/photo-1535141192574-5d4897ca63fc?w=300" 
-                         alt="Chocolate cake" 
-                         class="img-fluid">
-                    <div class="product-overlay">
-                        <span>Chocolate cake</span>
-                    </div>
-                </div>
-            </div>
+            {% empty %}
+            <p>Скоро здесь появятся наши работы</p>
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -77,8 +70,7 @@
             <div class="product-item">
                 <div class="product-item-image">
                     <img src="https://images.unsplash.com/photo-1576618148400-f54bed99fcf8?w=200" 
-                         alt="Red velvet cupcake" 
-                         class="img-fluid">
+                         alt="Red velvet cupcake" class="img-fluid">
                 </div>
                 <div class="product-item-info">
                     <h3 class="product-item-title">Red velvet cupcake</h3>
@@ -89,12 +81,10 @@
                     </div>
                 </div>
             </div>
-
             <div class="product-item">
                 <div class="product-item-image">
                     <img src="https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=200" 
-                         alt="Red velvet cupcake" 
-                         class="img-fluid">
+                         alt="Red velvet cupcake" class="img-fluid">
                 </div>
                 <div class="product-item-info">
                     <h3 class="product-item-title">Red velvet cupcake</h3>
@@ -115,8 +105,7 @@
         <div class="product-detail-card">
             <div class="product-detail-image">
                 <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600" 
-                     alt="Клубничный торт" 
-                     class="img-fluid">
+                     alt="Клубничный торт" class="img-fluid">
             </div>
             <div class="product-detail-info">
                 <div class="product-detail-header">
@@ -128,9 +117,7 @@
                     </div>
                 </div>
                 <p class="product-detail-description">
-                    Это вкусный клубничный торт, мягкий и кремовый. Это самый вкусный кекс «Красный бархат», 
-                    который вы когда-либо пробовали. Клубничный торт состоит из больших и маленьких кусочков. 
-                    Торт такой нежный, нежный и клубничный вкус и конфеты, посыпка.
+                    Это вкусный клубничный торт, мягкий и кремовый.
                 </p>
                 <div class="product-detail-price">$20</div>
                 <div class="size-selector">
@@ -150,7 +137,6 @@
 
 {% block extra_js %}
 <script>
-    // Quantity selector functionality
     document.querySelectorAll('.qty-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const qtyValue = this.parentElement.querySelector('.qty-value');
@@ -163,7 +149,6 @@
         });
     });
 
-    // Size selector functionality
     document.querySelectorAll('.size-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));

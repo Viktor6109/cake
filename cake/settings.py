@@ -2,6 +2,7 @@
 Django settings for cake project.
 """
 
+import os
 from pathlib import Path
 
 from decouple import Csv, config
@@ -95,7 +96,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        ),
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -108,12 +111,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "core.Client"
+
 
 # ==============================================================================
 # INTERNATIONALIZATION
 # ==============================================================================
 
-LANGUAGE_CODE = "ru"  # Русский — основной язык сайта (Прага)
+LANGUAGE_CODE = "ru"  # Русский — основной язык сайта
 
 TIME_ZONE = "Europe/Prague"
 
@@ -128,12 +133,12 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = (
-    BASE_DIR / "staticfiles"
-)  # Используется при деплое: python manage.py collectstatic
+# Используется при деплое: python manage.py collectstatic
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+# MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 # ==============================================================================

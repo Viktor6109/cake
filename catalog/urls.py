@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 app_name = "catalog"
@@ -11,6 +12,9 @@ urlpatterns = [
         "products/<slug:slug>/",
         views.ProductDetailView.as_view(),
         name="product_detail",
+    ),
+    path(
+        "products/<int:pk>/", views.ProductDetailView.as_view(), name="product_detail"
     ),
     # Галерея работ (портфолио)
     path("portfolio/", views.PortfolioListView.as_view(), name="portfolio"),
