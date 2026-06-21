@@ -310,3 +310,23 @@ button:focus,
     outline: 3px solid var(--primary-light);
     outline-offset: 2px;
 }
+
+/* Auth block in navbar */
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.nav-link--profile {
+    font-weight: 500;
+    color: var(--primary-color);
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nav-link--profile:hover {
+    color: var(--primary-dark);
+}

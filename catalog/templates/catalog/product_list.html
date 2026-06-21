@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Начинки — Tadypeceme{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero-title">Наши начинки</h1>
+        <p class="page-hero-subtitle">Каждая начинка готовится из натуральных ингредиентов — без красителей, загустителей и консервантов</p>
+    </div>
+</section>
+
+<section class="fillings-intro section">
+    <div class="container">
+        <div class="fillings-intro-grid">
+            <div class="fillings-intro-text">
+                <h2>Почему это важно</h2>
+                <p>Начинка — основа любого торта. Я подбираю ингредиенты лично и работаю только с проверенными поставщиками. Сезонные ягоды, натуральный шоколад, свежие сливки — ничего лишнего.</p>
+                <p>Каждый вкус можно скомбинировать с нужным кремом и бисквитом. Если не знаете что выбрать — напишите, помогу подобрать идеальный вариант для вашего мероприятия.</p>
+            </div>
+            <div class="fillings-intro-badges">
+                <div class="filling-badge">
+                    <div class="filling-badge-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div>
+                        <strong>Натуральный состав</strong>
+                        <span>Без консервантов и красителей</span>
+                    </div>
+                </div>
+                <div class="filling-badge">
+                    <div class="filling-badge-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div>
+                        <strong>Свежие ингредиенты</strong>
+                        <span>Готовится под каждый заказ</span>
+                    </div>
+                </div>
+                <div class="filling-badge">
+                    <div class="filling-badge-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </div>
+                    <div>
+                        <strong>Индивидуальный подбор</strong>
+                        <span>Под ваш вкус и мероприятие</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if products %}
+<section class="fillings-catalog section section-alt">
+    <div class="container">
+        <h2 class="section-title">Доступные начинки</h2>
+        <p class="section-subtitle">Выберите начинку для вашего торта — или закажите со своим пожеланием</p>
+        <div class="catalog-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <a href="{% url 'catalog:product_detail' product.pk %}" class="product-card-link">
+                    <div class="product-image">
+                        {% with first_image=product.images.first %}
+                        {% if first_image and first_image.image %}
+                            <img src="{{ first_image.image.url }}"
+                                 alt="{{ first_image.alt|default:product.name }}"
+                                 loading="lazy">
+                        {% else %}
+                            <div class="product-image-placeholder">
+                                <span>Фото скоро</span>
+                            </div>
+                        {% endif %}
+                        {% endwith %}
+                        <div class="product-overlay">
+                            <span>{{ product.name }}</span>
+                        </div>
+                    </div>
+                </a>
+                <div class="product-info">
+                    {% if product.price %}
+                    <p class="price">{{ product.price }} ₽/кг</p>
+                    {% else %}
+                    <p class="price price--request">По запросу</p>
+                    {% endif %}
+                    <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="section">
+    <div class="container" style="text-align:center;padding:60px 0;color:var(--text-secondary)">
+        <p>Скоро здесь появятся наши начинки — следите за обновлениями!</p>
+        <a href="{% url 'orders:order_create' %}" class="btn btn-primary" style="margin-top:24px">Заказать торт</a>
+    </div>
+</section>
+{% endif %}
+
+<section class="section">
+    <div class="container">
+        <div class="cta-card">
+            <div class="cta-text">
+                <h3>Не нашли нужный вкус?</h3>
+                <p>Напишите — создам начинку специально для вас</p>
+            </div>
+            <a href="{% url 'core:contacts' %}" class="btn btn-primary">Написать</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Регистрация — Tadypeceme{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1 class="auth-title">Регистрация</h1>
+            <p class="auth-subtitle">Создайте аккаунт и следите за своими заказами</p>
+        </div>
+
+        <form class="auth-form" method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="form-label" for="{{ form.name.id_for_label }}">Ваше имя</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                <span class="form-error">{{ form.name.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                <span class="form-error">{{ form.email.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="{{ form.phone.id_for_label }}">Телефон <span class="form-optional">(необязательно)</span></label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                <span class="form-error">{{ form.phone.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="{{ form.password1.id_for_label }}">Пароль</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                <span class="form-error">{{ form.password1.errors.0 }}</span>
+                {% endif %}
+                <span class="form-hint">Минимум 8 символов</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="{{ form.password2.id_for_label }}">Повторите пароль</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                <span class="form-error">{{ form.password2.errors.0 }}</span>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-auth">Создать аккаунт</button>
+        </form>
+
+        <p class="auth-switch">
+            Уже есть аккаунт? <a href="{% url 'core:login' %}">Войдите</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

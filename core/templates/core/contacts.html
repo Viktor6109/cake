@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Контакты — Tadypeceme{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+<style>
+.contacts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.contact-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+.contact-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+.contact-text h4 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+}
+.contact-text a,
+.contact-text p {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin: 0;
+}
+.contact-text a:hover {
+    color: var(--primary-color);
+}
+.map-placeholder {
+    background: var(--secondary-color);
+    border-radius: var(--radius);
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+@media (max-width: 720px) {
+    .contacts-grid { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero-title">Контакты</h1>
+        <p class="page-hero-subtitle">Свяжитесь со мной любым удобным способом</p>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <div class="container">
+        <div class="contacts-grid">
+
+            <div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-text">
+                        <h4>Город</h4>
+                        <p>Прага, Чехия</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-text">
+                        <h4>Телефон / WhatsApp</h4>
+                        <a href="tel:+420000000000">+420 000 000 000</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-text">
+                        <h4>Email</h4>
+                        <a href="mailto:hello@tadypeceme.cz">hello@tadypeceme.cz</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📸</div>
+                    <div class="contact-text">
+                        <h4>Instagram</h4>
+                        <a href="#" target="_blank" rel="noopener">@tadypeceme</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">⏰</div>
+                    <div class="contact-text">
+                        <h4>Приём заказов</h4>
+                        <p>Ежедневно, 9:00 – 21:00</p>
+                    </div>
+                </div>
+
+                <a href="{% url 'orders:order_create' %}" class="btn btn-primary" style="margin-top:8px">
+                    Оставить заявку
+                </a>
+            </div>
+
+            <div>
+                <div class="map-placeholder">
+                    <span>Карта — Прага</span>
+                </div>
+                <p style="margin-top:16px;font-size:0.9rem">
+                    Самовывоз или доставка по договорённости. Уточняйте при оформлении заказа.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

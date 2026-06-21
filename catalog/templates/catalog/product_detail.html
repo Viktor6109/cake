@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }} — Tadypeceme{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="detail-section">
+    <div class="container">
+        <div class="detail-back">
+            <a href="javascript:history.back()" class="detail-back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                Назад
+            </a>
+        </div>
+        <div class="detail-grid">
+
+            <!-- Gallery -->
+            <div class="detail-gallery">
+                {% with images=product.images.all %}
+                {% if images %}
+                <div class="detail-main-image" id="mainImageWrap">
+                    <img id="mainImage"
+                         src="{{ images.0.image.url }}"
+                         alt="{{ images.0.alt|default:product.name }}">
+                </div>
+                {% if images|length > 1 %}
+                <div class="detail-thumbs">
+                    {% for img in images %}
+                    <div class="detail-thumb {% if forloop.first %}active{% endif %}"
+                         onclick="switchImage('{{ img.image.url }}', '{{ img.alt|default:product.name }}', this)">
+                        <img src="{{ img.image.url }}" alt="{{ img.alt|default:product.name }}" loading="lazy">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% else %}
+                <div class="detail-main-image">
+                    <div class="product-image-placeholder" style="height:360px">
+                        <span>Фото скоро</span>
+                    </div>
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <!-- Info -->
+            <div class="detail-info">
+                <p class="detail-category">{{ product.category.name }}</p>
+                <h1 class="detail-title">{{ product.name }}</h1>
+
+                {% if product.price %}
+                <p class="detail-price">{{ product.price }} ₽<span style="font-size:1rem;font-weight:400;color:var(--text-secondary)">/кг</span></p>
+                {% else %}
+                <p class="detail-price" style="font-size:1.4rem;color:var(--text-secondary)">Цена по запросу</p>
+                {% endif %}
+
+                {% if product.description %}
+                <p class="detail-description">{{ product.description }}</p>
+                {% endif %}
+
+                {% if product.tags.all %}
+                <div class="detail-tags">
+                    <p class="detail-tags-label">Теги</p>
+                    <div class="detail-tags-list">
+                        {% for tag in product.tags.all %}
+                        <span class="tag-chip">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="detail-cta">
+                    <a href="{% url 'orders:order_create' %}?product={{ product.pk }}" class="btn btn-primary">
+                        Заказать
+                    </a>
+                    <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary">
+                        Посмотреть другие товары
+                    </a>
+                </div>
+
+                <p class="detail-sku">Артикул: {{ product.sku }}</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function switchImage(url, alt, thumb) {
+    document.getElementById('mainImage').src = url;
+    document.getElementById('mainImage').alt = alt;
+    document.querySelectorAll('.detail-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+}
+</script>
+{% endblock %}

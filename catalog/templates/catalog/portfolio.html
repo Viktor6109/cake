@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Портфолио — Tadypeceme{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <div class="container">
+        <h1 class="page-hero-title">Портфолио</h1>
+        <p class="page-hero-subtitle">Наши работы — каждый торт создаётся с любовью и вниманием к деталям</p>
+    </div>
+</section>
+
+<section class="portfolio-section">
+    <div class="container">
+        {% if images %}
+        <div class="portfolio-grid">
+            {% for img in images %}
+            <div class="portfolio-item">
+                <img src="{{ img.image.url }}"
+                     alt="{{ img.alt|default:img.product.name }}"
+                     loading="lazy">
+                <div class="portfolio-overlay">
+                    <span class="portfolio-caption">
+                        <a href="{% url 'catalog:product_detail' img.product.pk %}" style="color:inherit">
+                            {{ img.product.name }}
+                        </a>
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center;padding:80px 0;color:var(--text-secondary)">
+            <p>Скоро здесь появятся наши работы — следите за обновлениями!</p>
+            <a href="{% url 'orders:order_create' %}" class="btn btn-primary" style="margin-top:24px">Заказать торт</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
