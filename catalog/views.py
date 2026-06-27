@@ -30,7 +30,8 @@ class PortfolioListView(ListView):
 
     def get_queryset(self):
         return (
-            ProductImage.objects.filter(product__is_active=True)
+            ProductImage.objects.filter(product__is_active=True, image__isnull=False)
+            .exclude(image="")
             .select_related("product", "product__category")
             .order_by("product__category", "sort_order")
         )

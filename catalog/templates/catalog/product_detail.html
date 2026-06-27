@@ -21,19 +21,38 @@
 
             <!-- Gallery -->
             <div class="detail-gallery">
-                {% with images=product.images.all %}
-                {% if images %}
-                <div class="detail-main-image" id="mainImageWrap">
+                {% with media=product.images.all %}
+                {% if media %}
+                <div class="detail-main-image" id="mainMediaWrap">
+                    {% if media.0.is_video %}
+                    <video id="mainVideo"
+                           src="{{ media.0.video.url }}"
+                           controls playsinline preload="auto"
+                           class="detail-main-video">
+                    </video>
+                    {% else %}
                     <img id="mainImage"
-                         src="{{ images.0.image.url }}"
-                         alt="{{ images.0.alt|default:product.name }}">
+                         src="{{ media.0.image.url }}"
+                         alt="{{ media.0.alt|default:product.name }}">
+                    {% endif %}
                 </div>
-                {% if images|length > 1 %}
+                {% if media|length > 1 %}
                 <div class="detail-thumbs">
-                    {% for img in images %}
+                    {% for item in media %}
                     <div class="detail-thumb {% if forloop.first %}active{% endif %}"
-                         onclick="switchImage('{{ img.image.url }}', '{{ img.alt|default:product.name }}', this)">
-                        <img src="{{ img.image.url }}" alt="{{ img.alt|default:product.name }}" loading="lazy">
+                         data-type="{% if item.is_video %}video{% else %}image{% endif %}"
+                         data-src="{% if item.is_video %}{{ item.video.url }}{% else %}{{ item.image.url }}{% endif %}"
+                         data-alt="{{ item.alt|default:product.name }}"
+                         onclick="switchMedia(this)">
+                        {% if item.is_video %}
+                        <video src="{{ item.video.url }}"
+                               preload="metadata" muted playsinline
+                               style="width:100%;height:100%;object-fit:cover;object-position:top center;pointer-events:none;">
+                        </video>
+                        <div class="thumb-play-overlay">▶</div>
+                        {% else %}
+                        <img src="{{ item.image.url }}" alt="{{ item.alt|default:product.name }}" loading="lazy">
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>
@@ -94,9 +113,31 @@
 
 {% block extra_js %}
 <script>
-function switchImage(url, alt, thumb) {
-    document.getElementById('mainImage').src = url;
-    document.getElementById('mainImage').alt = alt;
+function switchMedia(thumb) {
+    const wrap = document.getElementById('mainMediaWrap');
+    const type = thumb.dataset.type;
+    const src  = thumb.dataset.src;
+    const alt  = thumb.dataset.alt;
+
+    if (type === 'video') {
+        let vid = document.getElementById('mainVideo');
+        if (!vid) {
+            wrap.innerHTML = '<video id="mainVideo" controls playsinline preload="auto" class="detail-main-video"></video>';
+            vid = document.getElementById('mainVideo');
+        }
+        vid.src = src;
+        vid.load();
+        vid.play();
+    } else {
+        let img = document.getElementById('mainImage');
+        if (!img) {
+            wrap.innerHTML = '<img id="mainImage">';
+            img = document.getElementById('mainImage');
+        }
+        img.src = src;
+        img.alt = alt;
+    }
+
     document.querySelectorAll('.detail-thumb').forEach(t => t.classList.remove('active'));
     thumb.classList.add('active');
 }

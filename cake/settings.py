@@ -26,6 +26,11 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv(
 # APPLICATIONS
 # ==============================================================================
 
+JAZZMIN_SETTINGS = {
+    "custom_css": "css/admin_custom.css",
+    "custom_js": "js/admin_custom.js",
+}
+
 INSTALLED_APPS = [
     "jazzmin",
     "django.contrib.admin",

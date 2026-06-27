@@ -33,17 +33,17 @@ def generate_sku(category):
 
 
 def product_image_upload_path(instance, filename):
-    """
-    Сохраняет фото в: products/<category_slug>/<filename>
-    Папка создаётся Django/хранилищем автоматически при записи файла.
-    """
     product = instance.product
     category = product.category
-
-    # Берём slug категории; если по какой-то причине он пуст — генерируем из name
     folder = category.slug if category.slug else slugify(category.name)
-
     return os.path.join("products", folder, filename)
+
+
+def product_video_upload_path(instance, filename):
+    product = instance.product
+    category = product.category
+    folder = category.slug if category.slug else slugify(category.name)
+    return os.path.join("products", folder, "video", filename)
 
 
 class Category(models.Model):
@@ -161,15 +161,25 @@ class ProductImage(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images", verbose_name="Товар"
     )
-    image = models.ImageField("Фото", upload_to=product_image_upload_path)
-    alt = models.CharField("Alt-текст", max_length=200, blank=True)
+    image = models.ImageField(
+        "Фото", upload_to=product_image_upload_path, null=True, blank=True
+    )
+    video = models.FileField(
+        "Видео (MP4)", upload_to=product_video_upload_path, null=True, blank=True
+    )
+    alt = models.CharField("Alt-текст / подпись", max_length=200, blank=True)
     sort_order = models.PositiveSmallIntegerField("Порядок", default=0)
-    is_main = models.BooleanField("Главное фото", default=False)
+    is_main = models.BooleanField("Главный медиафайл", default=False)
 
     class Meta:
-        verbose_name = "Фото товара"
-        verbose_name_plural = "Фото товаров"
+        verbose_name = "Медиафайл товара"
+        verbose_name_plural = "Медиафайлы товаров"
         ordering = ["sort_order"]
 
+    @property
+    def is_video(self):
+        return bool(self.video)
+
     def __str__(self):
-        return f"Фото {self.product.name} #{self.sort_order}"
+        kind = "Видео" if self.is_video else "Фото"
+        return f"{kind} {self.product.name} #{self.sort_order}"

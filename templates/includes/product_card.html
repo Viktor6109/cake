@@ -5,6 +5,11 @@
                 <img src="{{ product.main_image.image.url }}"
                      alt="{{ product.main_image.alt|default:product.name }}"
                      loading="lazy">
+            {% elif product.main_image and product.main_image.video %}
+                <video src="{{ product.main_image.video.url }}"
+                       autoplay muted loop playsinline
+                       style="width:100%;height:100%;object-fit:cover;">
+                </video>
             {% else %}
                 <div class="product-image-placeholder">
                     <span>Фото скоро</span>

@@ -1,0 +1,59 @@
+/* Prevent horizontal scroll from long filenames in tabular inlines */
+
+/* Wrap long file paths */
+.tabular .form-row td p.file-upload {
+    max-width: 220px;
+    word-break: break-all;
+    white-space: normal;
+}
+
+/* The "Currently: filename" link */
+.tabular .form-row td p.file-upload a {
+    display: inline-block;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+
+/* File input itself */
+.tabular .form-row td input[type="file"] {
+    max-width: 200px;
+}
+
+/* General table overflow guard */
+.tabular fieldset.module table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.tabular .form-row td {
+    overflow: hidden;
+    word-break: break-word;
+}
+
+/* Inline action buttons (Изменить файл / Удалить) */
+.inline-action-btn {
+    margin: 8px 8px 0 0;
+    padding: 5px 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #f8f8f8;
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.inline-action-btn:hover {
+    background: #eee;
+}
+
+.inline-delete-btn {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.inline-delete-btn:hover {
+    background: #fff0f0;
+}
